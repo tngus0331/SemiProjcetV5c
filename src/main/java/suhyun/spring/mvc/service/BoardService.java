@@ -1,9 +1,9 @@
-package siestageek.spring.mvc.service;
+package suhyun.spring.mvc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import siestageek.spring.mvc.dao.BoardDAO;
-import siestageek.spring.mvc.vo.BoardVO;
+import suhyun.spring.mvc.dao.BoardDAO;
+import suhyun.spring.mvc.vo.BoardVO;
 
 import java.util.ArrayList;
 

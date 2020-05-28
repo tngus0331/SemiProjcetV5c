@@ -1,12 +1,12 @@
-package siestageek.spring.mvc.controller;
+package suhyun.spring.mvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import siestageek.spring.mvc.service.BoardService;
-import siestageek.spring.mvc.vo.BoardVO;
+import suhyun.spring.mvc.service.BoardService;
+import suhyun.spring.mvc.vo.BoardVO;
 
 import java.util.ArrayList;
 

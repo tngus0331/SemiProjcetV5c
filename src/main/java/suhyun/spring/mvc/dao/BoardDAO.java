@@ -1,15 +1,14 @@
-package siestageek.spring.mvc.dao;
+package suhyun.spring.mvc.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import siestageek.spring.mvc.vo.BoardVO;
+import suhyun.spring.mvc.vo.BoardVO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository("bdao")

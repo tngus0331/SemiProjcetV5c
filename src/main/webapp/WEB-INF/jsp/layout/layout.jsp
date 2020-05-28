@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -75,6 +76,7 @@
 <script src="/resources/bs4/js/bootstrap.min.js"></script>
 <script src="/resources/js/board.js"></script>
 <script src="/resources/js/join.js"></script>
+<script src="/resources/js/pds.js"></script>
 
 <script>
     // 회원가입버튼
