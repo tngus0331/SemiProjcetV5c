@@ -1,5 +1,10 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<%-- 줄바꿈 문자를 newChar 변수에 저장 --%>
+<c:set var="newChar" value="
+" scope="page"/>
 
     <!-- 메인영역 시작 -->
     <div id="main">
@@ -44,7 +49,7 @@
                     <td class="text-right">${b.regdate} / ${b.views} / ${b.thumbup}</td></tr>
                 <tr style="background: #ffffcc">
                     <td colspan="2" class="text-left"
-                        style="border-bottom: 3px solid black;">${b.contents}</td></tr>
+                        style="border-bottom: 3px solid black;">${fn:replace(b.contents, newChar, "<br>")}</td></tr>
             </table>
         </div><!-- 본문 -->
 
