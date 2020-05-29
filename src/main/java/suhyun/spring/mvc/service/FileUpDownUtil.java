@@ -8,7 +8,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -102,4 +103,76 @@ public class FileUpDownUtil {
     }
 
     // 다운로드 처리 메서드
-};
+    public void procDownload(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+        // 파일명이 한글인 경우를 대비해서 작성해 둠
+        req.setCharacterEncoding("utf-8");
+
+        // 다운로드할 파일명을 알아냄
+        String fName = req.getParameter("f");
+        String dfName = "";
+
+        // HTTP 응답을 위해 stream 관련 변수 선언
+        InputStream is = null;
+        OutputStream os = null;
+        File f = null;
+
+        try {
+
+
+            boolean skip = false;
+
+            // 다운로드할 파일의 실제 위치 파악
+            // 파일의 내용을 stream으로 미리 읽어둠
+            try {
+                f = new File(uploadPath, fName);
+                is = new FileInputStream(f);
+            } catch (Exception ex) {
+                skip = true;
+            }
+
+            // HTTP 응답을 위한 준비작업
+            res.reset();
+            res.setContentType("application/octet-stream");
+            // 응답 스트림의 내용은 이진형태로 구성됨
+            res.setHeader("Content-Description", "FileDownload");
+            // 다운로드를 위해 임의로 작성
+
+            if (!skip) { // 다운로드할 파일이 존재한다면
+
+                // 파일명이 한글인 경우 제대로 표시할 수 있도록
+                // utf-8로 변환함
+                fName = new String(fName.getBytes("utf-8"), "iso-8859-1");
+
+                // 클릭시 다운로드 대화상자에 표시할 내용 정의
+                res.setHeader("Content-Disposition", "attachment; filename=\"" + fName + "\"");
+                res.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+                res.setHeader("Content-Length", f.length() + "");
+
+                // Http 응답으로 파일의 내용을 스트림으로 전송함
+                os = res.getOutputStream();
+                // 파일의 내용을 byte 배열에 저장함
+                byte b[] = new byte[(int) f.length()];
+                int cnt = 0;
+
+                // 1byte씩 http 응답 스트림으로 쏨
+                while ((cnt = is.read(b)) > 0) {
+                    os.write(b, 0, cnt);
+                }
+
+            } else { // 다운로드할 파일이 존재하지 않는다면
+                res.setContentType("text/html; charset=utf-8");
+                PrintWriter out = res.getWriter();
+                out.print("<h1> 다운로드할 파일이 없어요!!</h1>");
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (os != null) os.close();
+            if (is != null) is.close();
+        }
+    }
+
+}; // method
