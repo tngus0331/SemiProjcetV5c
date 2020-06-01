@@ -3,8 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%-- 줄바꿈 문자를 newChar 변수에 저장 --%>
-<c:set var="newChar" value="
-" scope="page"/>
+<c:set var="newChar" value="" scope="page"/>
 
     <!-- 메인영역 시작 -->
     <div id="main">
