@@ -20,7 +20,7 @@
     <ul class="nav navbar-nav nav-fill w-100">
         <li class="nav-item"><a class="nav-link" href="/intro.do">프로젝트소개</a></li>
         <li class="nav-item"><a class="nav-link" href="/join/agree.do">회원가입</a></li>
-        <li class="nav-item"><a class="nav-link" href="/board/list.do">게시판</a></li>
+        <li class="nav-item"><a class="nav-link" href="/board/list.do?cp=1">게시판</a></li>
         <li class="nav-item"><a class="nav-link" href="/pds/list.do">자료실</a></li>
         <li class="nav-item"><a class="nav-link" href="/gallery/list.do">갤러리</a></li>
         <li class="nav-item"><a class="nav-link" href="/admin.do">관리자</a></li>
