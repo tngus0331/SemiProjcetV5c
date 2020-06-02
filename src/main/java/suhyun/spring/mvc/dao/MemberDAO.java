@@ -26,6 +26,7 @@ public class MemberDAO {
     @Value("#{jdbc['selectJoinSQL']}") private String selectJoinSQL;
     @Value("#{jdbc['selectOneJoinSQL']}") private String selectOneJoinSQL;
     @Value("#{jdbc['ZipcodeSQL']}") private String ZipcodeSQL;
+    @Value("#{jdbc['selectUidSQL']}") private String selectUidSQL;
 
     @Autowired
     public MemberDAO(JdbcTemplate jdbcTemplate) {
@@ -95,5 +96,13 @@ public class MemberDAO {
                     rs.getString("bunji"));
             return zvo;
         }
+    }
+
+    // 아이디 중복체크
+    public int selectUserid(String uid) {
+        Object[] params = new Object[] {uid};
+
+        return jdbcTemplate.queryForObject(selectUidSQL, params, Integer.class);
+
     }
 }

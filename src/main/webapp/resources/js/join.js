@@ -104,6 +104,35 @@ $('#go2index').on('click', function () {
     location.href = '/index.do';
 }); // 메인으로
 
+
+
+
+
+// checkuid
+// 아이디 중복체크
+function checkuid() {
+    $.ajax({
+        url : 'join/checkuid',
+        type : 'GET',
+        data : {uid : $('#uid').val()}
+    }) // 비동기 요청
+    .done(function (data) {
+        var msg = '사용 불가능한 아이디입니다..';
+        if(data.trim() == '0') {
+            msg = '사용 가능한 아이디입니다!';
+        }
+        $('#uidmsg').text(msg);
+    }) // 처리 완료
+
+    .fail(function (xhr, status, error) {
+        alert(xhr.status + "/" + error);
+    }); // 처리 실패
+}
+
+$('#uid').on('blur', function () {
+    checkuid();
+});
+
 // showzip
 // 우편번호 찾기 모달창 표시
 $('#showzipbtn').on('click', function () {
@@ -112,9 +141,6 @@ $('#showzipbtn').on('click', function () {
 
     $('#zipcode').modal('show');
 });
-
-
-
 
 // findzip
 // ajax로 우편번호 검색 후 결과 출력
