@@ -104,3 +104,81 @@ $('#go2index').on('click', function () {
     location.href = '/index.do';
 }); // 메인으로
 
+// showzip
+// 우편번호 찾기 모달창 표시
+$('#showzipbtn').on('click', function () {
+    $('#dong').val("");
+    $('#addrlist').find('option').remove();
+
+    $('#zipcode').modal('show');
+});
+
+
+
+
+// findzip
+// ajax로 우편번호 검색 후 결과 출력
+// 실제요청 주소 : /join/zipcode?dong=창신
+function findzipcode () {
+
+    $.ajax({
+        url: '/join/zipcode',
+        type: 'GET',
+        data: {dong: $('#dong').val()}
+    }) // 비동기 요청 정의
+    .done(function (data) {
+        // 서버에서 넘어온 데이터는 JSON형이므로
+        // 출력시 Object로만 보여짐
+        // alert("데이터: " + $('#dong').val() + "\n" + "결과: " + data);
+
+        var opts = "";
+        $.each(data, function () { // 행 단위 반복 처리
+           var zip = "";
+           $.each(this, function (k, v) { // 키별로 값을 반복 처리 (ex - k : dong, v : 자양동)
+               if(v != null) zip += v + " ";
+           });
+           opts += "<option>" + zip + "</option>";
+        });
+
+        $('#addrlist').find("option").remove();
+        // 기존의 option 태그를 제거
+        $('#addrlist').append(opts);
+        // 새로만든 option 태그 추가
+
+    }) // 요청 후 넘어온 응답결과 처리
+    .fail(function (xhr, status, error) {
+        alert("오류: " + xhr.status + "/" + error);
+    }); // 요청 실패 후 처리
+}
+
+$("#findzipbtn").on('click', function () {
+    findzipcode();
+});
+
+// sendzip
+function sendzipcode() {
+    var addr = $('#addrlist option:selected').val();
+    // 선택한 주소 항목의 값을 변수로 지정
+
+    if(addr == undefined) {
+        alert('주소를 선택하세요!');
+        return;
+    }
+
+    var addrs = addr.split(" "); // 공백으로 분리
+
+    // 분리된 주소를 지정한 위치로 보냄
+    // 우편번호 각 부분은 '-'로 분리함
+    $('#zip1').val(addrs[0].split("-")[0]);
+    $('#zip2').val(addrs[0].split("-")[1]);
+
+    // 공백으로 분리한 나머지 주소는 기본주소로 채움
+    $('#addr1').val(addrs[1] + " " + addrs[2] + " " + addrs[3]);
+
+    // 우편번호 검색창 닫음
+    $('#zipcode').modal('hide');
+}
+
+$("#sendzipbtn").on('click', function () {
+   sendzipcode();
+});
