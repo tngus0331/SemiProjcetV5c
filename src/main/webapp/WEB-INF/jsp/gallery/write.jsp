@@ -13,7 +13,7 @@
                    새글쓰기</h4>
             </div>
             <div class="col-6 text-right">
-                <button type="button" id="lstbd"
+                <button type="button" id="lstgal"
                         class="btn btn-light">
                     <i class="fa fa-list"> </i>
                     목록으로
@@ -22,7 +22,7 @@
         </div><!-- 버튼들 -->
 
         <div class="row mgnpdg15">
-            <form class="card card-body bg-light">
+            <form class="card card-body bg-light" id="galleryfrm" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label class="col-form-label col-2 text-right">
                         제목</label>
@@ -49,19 +49,19 @@
                         파일첨부</label>
 
                     <div class="custom-file col-7">
-                        <input type="file" id="file1" name="files"
+                        <input type="file" id="file1" name="img1"
                                 class="custom-file-input">
                         <label class="custom-file-label">
                                 첨부할 파일을 선택하세요</label>
                     </div>
                     <div class="custom-file col-7 offset-2">
-                        <input type="file" id="file2" name="files"
+                        <input type="file" id="file2" name="img2"
                                class="custom-file-input">
                         <label class="custom-file-label">
                             첨부할 파일을 선택하세요</label>
                     </div>
                     <div class="custom-file col-7 offset-2">
-                        <input type="file" id="file3" name="files"
+                        <input type="file" id="file3" name="img3"
                                class="custom-file-input">
                         <label class="custom-file-label">
                             첨부할 파일을 선택하세요</label>
@@ -79,7 +79,7 @@
                 <div class="row justify-content-center"
                     style="margin-top: 55px">
                     <hr style="width:90%; color:grey; margin: 35px 0">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" id="galokbtn">
                         <i class="fa fa-check"></i>입력하기
                     </button>&nbsp;
                     <button type="button" class="btn btn-danger">
