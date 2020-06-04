@@ -13,5 +13,9 @@ $('#loginbtn').on('click', function () {
         $('#loginfrm').attr('action', '/login/login');
         $('#loginfrm').submit();
     }
+});
 
+// 로그아웃하기
+$('#logoutbtn').on('click', function () {
+   location.href = 'login/logout';
 });

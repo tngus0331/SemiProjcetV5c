@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<c:if test="${empty UID}">
+    <script>location.href='login/fail';</script>
+</c:if>
 
     <!-- 메인영역 시작 -->
     <div id="main">
@@ -11,13 +14,17 @@
         </div> <!-- 타이틀 -->
 
         <div class="row margin1050">
-            <div class="col-12 text-right">
-                <button type="button" id="newpd"
-                        class="btn btn-light">
-                    <i class="fa fa-plus-circle"> </i>
-                    새글쓰기
-                </button>
-            </div>
+            <div class="row margin1050">
+                <c:if test="${not empty UID}">
+                    <div class="col-12 text-right">
+                        <button type="button" id="newbd"
+                                class="btn btn-light">
+                            <i class="fa fa-plus-circle"> </i>
+                            새글쓰기
+                        </button>
+                    </div>
+                </c:if>
+            </div><!-- 버튼들 -->
         </div><!-- 버튼들 -->
 
         <div class="row margin1050">

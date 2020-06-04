@@ -1,66 +1,35 @@
 package suhyun.spring.mvc.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import suhyun.spring.mvc.dao.PdsDAO;
-import suhyun.spring.mvc.vo.PdsVO;
+import suhyun.spring.mvc.dao.LoginDAO;
+import suhyun.spring.mvc.vo.MemberVO;
 
-import java.util.ArrayList;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 
-@Service("psrv")
+@Service("lsrv")
 public class LoginService {
 
-    private PdsDAO pdao;
+    private LoginDAO ldao;
 
-    @Autowired
-    public LoginService(PdsDAO pdao) {
-        this.pdao = pdao;
+    public LoginService(LoginDAO ldao) {
+        this.ldao = ldao;
     }
 
-    public String newPds(PdsVO pd, Map<String, String> frmdata) {
-        String result = "데이터 입력 실패!";
+    // 로그인 체크
+    public boolean checkLogin(MemberVO mvo, HttpSession sess) {
+        boolean isLogin = false;
 
-        procFormdata(pd, frmdata);
-        pd.setFdown("0");
+        // 로그인 성공시 회원정보(ID)를 세션에 저장
+        if(ldao.selectLogin(mvo) > 0) {
+            sess.setAttribute("UID", mvo.getUserid());
 
-        if (pdao.insertPds(pd))
-            result = "데이터 입력 성공!!";
-
-        System.out.println(result);
-        // result 변수 값을 WAS 콘솔에 로그형태로 출력
-
-        return result;
-    }
-
-    public ArrayList<PdsVO> showPds() {
-        return (ArrayList<PdsVO>)pdao.selectPds();
-    }
-
-    public PdsVO showOnePds(String pno) {
-        pdao.updateViewPds(pno); // 조회수 증가
-        return pdao.selectOnePds(pno);
-    }
-
-    // 첨부파일 다운수 처리
-    public void modifyDown(String pno) {
-        pdao.updateDownPds(pno);
-    }
-
-    // multipart 폼 데이터 처리
-    private void procFormdata(PdsVO p, Map<String, String> frmdata) {
-
-        for(String key:frmdata.keySet()) {
-            String val = frmdata.get(key);
-            switch (key) {
-                case "title": p.setTitle(val); break;
-                case "userid": p.setUserid(val); break;
-                case "contents": p.setContents(val); break;
-
-                case "file1": p.setFname(val); break;
-                case "file1size": p.setFsize(val); break;
-                case "file1type": p.setFtype(val); break;
-            }
+            isLogin = true;
         }
+
+        return isLogin;
+
     }
+
+
 }

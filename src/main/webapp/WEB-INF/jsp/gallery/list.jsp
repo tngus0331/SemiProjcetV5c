@@ -15,13 +15,17 @@
         </div> <!-- 타이틀 -->
 
         <div class="row margin1050">
-            <div class="col-12 text-right">
-                <button type="button" id="newgal"
-                        class="btn btn-light">
-                    <i class="fa fa-plus-circle"> </i>
-                    새글쓰기
-                </button>
-            </div>
+            <div class="row margin1050">
+                <c:if test="${not empty UID}">
+                    <div class="col-12 text-right">
+                        <button type="button" id="newbd"
+                                class="btn btn-light">
+                            <i class="fa fa-plus-circle"> </i>
+                            새글쓰기
+                        </button>
+                    </div>
+                </c:if>
+            </div><!-- 버튼들 -->
         </div><!-- 버튼들 -->
 
         <div class="row margin1050">
@@ -31,7 +35,7 @@
                     <li class="list-inline-item">
                         <a href="/gallery/view?gno=${g.gno}">
                             <img src="${thumbURL}${g.gno}.${fn:split(g.fname1, '.')[1]}" class="img-thumbnail" width="235"
-                            title="${g.title} / ${g.userid} / ${fn:substring(g.regdate, 0, 10)} / ${g.views}"></a></li>
+                            title="${g.title} / ${g.userid} / ${fn:substring(g.regdate, 0, 10)}"></a></li>
                     </c:forEach>
                 </ul>x
             </div>
