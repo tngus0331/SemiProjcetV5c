@@ -1,8 +1,11 @@
 package suhyun.spring.mvc.service;
 
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,8 +32,32 @@ public class ImageUploadUtil {
     }
 
     // 업로드한 이미지들 중 첫번째 이미지에 대한 썸네일 생성
-    public void imageCropResize(String fname1, String id) {
+    public void imageCropResize(String fname, String id) {
+        // 서버에 업로드된 파일이름 (썸네일 대상)
+        String ofname = IMG_UPLOAD_PATH + fname;
+        // 업로드된 파일이름에서 확장자 부분 추출
+        String imgtype = fname.substring(fname.lastIndexOf(".")+1);
+        // 썸네일 이미지 이름 설정
+        String tfname = IMG_UPLOAD_PATH + "_thumb/small_" + id + "." + imgtype;
 
+        // 원본이미지를 읽어서 메모리상에 이미지 객체(캔버스)로 만들어 둠
+        try {
+            BufferedImage image = ImageIO.read(new File(ofname));
+            int imgwidth = Math.min(image.getHeight(), image.getWidth());
+            int imgheight = imgwidth;
+
+            // 지정한 위치를 기준으로 잘라냄
+            BufferedImage scaledImg = Scalr.crop(image, (image.getWidth() - imgwidth)/2, (image.getHeight() - imgheight)/2
+            , imgwidth, imgheight, null);
+
+            // 잘라낸 이미지를 230x220으로 재조정
+            BufferedImage resizedImg = Scalr.resize(scaledImg, 235, 200, null);
+
+            // 재조정한 이미지를 실제 경로에 저장
+            ImageIO.write(resizedImg, imgtype, new File(tfname));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     // 겹치지 않는 파일명을 위해 유니크한 임의의 값 생성
